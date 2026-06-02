@@ -1,0 +1,28 @@
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: react-auth
+
+    ports:
+      - "${APP_PORT}:80"
+
+  ngrok:
+    image: ngrok/ngrok:latest
+
+    container_name: ngrok
+
+    restart: unless-stopped
+
+    depends_on:
+      - web
+
+    command: >
+      http web:80
+      --authtoken=${NGROK_AUTHTOKEN}
+
+    ports:
+      - "4040:4040"
