@@ -1,37 +1,19 @@
-import { useState } from "react";
-
+// src/App.jsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 
-function App() {
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/about" element={<About />} />
 
-    const [page, setPage] = useState("login");
-
-    return (
-        <div>
-
-            <button
-                onClick={() => setPage("login")}
-            >
-                Login
-            </button>
-
-            <button
-                onClick={() => setPage("register")}
-            >
-                Register
-            </button>
-
-            <hr />
-
-            {
-                page === "login"
-                    ? <Login />
-                    : <Register />
-            }
-
-        </div>
-    );
+        {/* phải đặt CUỐI CÙNG */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App;
